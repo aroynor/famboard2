@@ -12,7 +12,7 @@ A self-hosted family schedule and reward tracker for kids. Built with FastAPI, R
                         │                                                 │
   Browser / Phone ──────┤──▶ Caddy (system, existing)                    │
                         │       │                                         │
-                        │       ├──▶ famboard_frontend:80  (caddy_net)   │
+                        │       ├──▶ famboard_frontend:3000 (caddy_net)   │
                         │       │        Caddy static file server         │
                         │       │        serves React build               │
                         │       │        proxies /api/* ──────────┐       │
@@ -43,7 +43,7 @@ FamBoard has **no exposed ports for the frontend or API** — they live entirely
 | Port | Service      | Exposed | Notes                                        |
 |------|--------------|---------|----------------------------------------------|
 | 8700 | FamBoard API | No      | Internal only, on `famboard_net`             |
-| 80   | Frontend     | No      | Internal, Caddy reaches it via `caddy_net`   |
+| 3000 | Frontend     | No      | Internal, Caddy reaches it via `caddy_net`   |
 | 8702 | ntfy         | Yes     | LAN phone access; Caddy can also proxy this  |
 
 **Existing ports avoided:** 2283 (immich), 5432 (joplin-db), 6379 (immich-redis), 8080 (vaultwarden), 8096/8920 (jellyfin), 9090 (filebrowser), 22300 (joplin), 3012 (vaultwarden ws)
@@ -161,7 +161,7 @@ Open your existing Caddyfile and add these blocks (see also `Caddyfile.example`)
 
 ```caddy
 famboard.home {
-    reverse_proxy famboard_frontend:80
+    reverse_proxy famboard_frontend:3000
 }
 
 # Optional — nice hostname for ntfy instead of bare port 8702
@@ -324,7 +324,7 @@ docker compose restart api
 docker inspect famboard_frontend | grep -A10 Networks
 
 # Test from Caddy container
-docker exec <caddy_container> curl -s http://famboard_frontend:80
+docker exec <caddy_container> curl -s http://famboard_frontend:3000
 ```
 
 **Caddy network name mismatch:**
