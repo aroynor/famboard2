@@ -1,0 +1,60 @@
+version: "3.9"
+
+# Existing ports avoided: 2283(immich) 5432(joplin-db) 6379(immich-redis)
+# 8080(vaultwarden) 8096/8920(jellyfin) 9090(filebrowser) 22300(joplin) 3012(vaultwarden)
+#
+# FamBoard: api and frontend are internal only — Caddy proxies them.
+# ntfy exposes 8702 for LAN phone access.
+
+services:
+  api:
+    build: ./backend
+    container_name: famboard_api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: sqlite:////data/famboard.db
+      SECRET_KEY: ${SECRET_KEY:-change-this-in-production}
+      NTFY_URL: http://ntfy:80
+      NTFY_TOPIC: ${NTFY_TOPIC:-famboard}
+      TOKEN_EXPIRE_MINUTES: 1440
+    volumes:
+      - famboard_data:/data
+    networks:
+      - famboard_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8700/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  frontend:
+    build: ./frontend
+    container_name: famboard_frontend
+    restart: unless-stopped
+    depends_on:
+      - api
+    networks:
+      - famboard_net
+      - caddy_net
+
+  ntfy:
+    image: binwiederhier/ntfy:latest
+    container_name: famboard_ntfy
+    restart: unless-stopped
+    command: serve --base-url ${NTFY_BASE_URL:-http://localhost:8702}
+    ports:
+      - "8702:80"
+    volumes:
+      - famboard_ntfy:/var/lib/ntfy
+    networks:
+      - famboard_net
+
+volumes:
+  famboard_data:
+  famboard_ntfy:
+
+networks:
+  famboard_net:
+    driver: bridge
+  caddy_net:
+    external: true

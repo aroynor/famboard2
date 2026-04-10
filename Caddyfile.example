@@ -1,0 +1,13 @@
+# Add these blocks to your existing system Caddyfile
+# (typically at /etc/caddy/Caddyfile or wherever your Caddy container mounts it)
+#
+# Replace "home" with your actual local domain (e.g. .lan, .internal, .local)
+
+famboard.home {
+    reverse_proxy famboard_frontend:80
+}
+
+# Optional — expose ntfy with a nice hostname instead of :8702
+ntfy.home {
+    reverse_proxy famboard_ntfy:80
+}

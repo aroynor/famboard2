@@ -1,0 +1,245 @@
+:root {
+  --bg: #f9f9f8;
+  --surface: #ffffff;
+  --border: #e8e7e3;
+  --border-strong: #d3d1c7;
+  --text: #1a1a18;
+  --text-muted: #6b6b67;
+  --text-hint: #9b9b97;
+  --accent: #534AB7;
+  --accent-light: #EEEDFE;
+  --accent-text: #3C3489;
+  --success: #1D9E75;
+  --success-light: #E1F5EE;
+  --warning: #BA7517;
+  --warning-light: #FAEEDA;
+  --danger: #A32D2D;
+  --danger-light: #FCEBEB;
+  --study: #E6F1FB; --study-text: #0C447C;
+  --chore: #EAF3DE; --chore-text: #27500A;
+  --sport: #FAECE7; --sport-text: #712B13;
+  --music: #EEEDFE; --music-text: #3C3489;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-lg: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 7px 16px;
+  transition: background 0.15s, opacity 0.15s;
+}
+button:hover { background: var(--bg); }
+button:active { opacity: 0.8; }
+button.primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+button.primary:hover { background: var(--accent-text); }
+button.ghost {
+  border: none;
+  background: transparent;
+  padding: 4px 8px;
+}
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent);
+}
+textarea { resize: vertical; min-height: 72px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+.badge.study { background: var(--study); color: var(--study-text); }
+.badge.chore { background: var(--chore); color: var(--chore-text); }
+.badge.sport { background: var(--sport); color: var(--sport-text); }
+.badge.music { background: var(--music); color: var(--music-text); }
+
+.pts-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--warning-light);
+  color: var(--warning);
+}
+.pts-pill.earned { background: var(--success-light); color: var(--success); }
+
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 40px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.page { max-width: 680px; margin: 0 auto; padding: 16px 16px 80px; }
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  height: 52px;
+  gap: 8px;
+}
+.nav-brand { font-weight: 600; font-size: 16px; margin-right: auto; }
+.nav a { font-size: 13px; color: var(--text-muted); padding: 6px 10px; border-radius: var(--radius-sm); }
+.nav a.active, .nav a:hover { background: var(--accent-light); color: var(--accent-text); }
+
+.tab-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.tab-row button {
+  font-size: 13px;
+  padding: 5px 14px;
+  border-radius: 99px;
+}
+.tab-row button.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  text-align: center;
+}
+.stat-box .val { font-size: 22px; font-weight: 600; }
+.stat-box .lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+.task-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+.task-card.done { opacity: 0.55; }
+.task-card.done .task-name { text-decoration: line-through; color: var(--text-hint); }
+
+.check-circle {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+  padding: 0;
+}
+.check-circle.checked {
+  background: var(--success);
+  border-color: var(--success);
+}
+.check-circle svg { display: none; }
+.check-circle.checked svg { display: block; }
+
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 20px 0 10px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--success);
+  transition: width 0.4s ease;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.form-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+.form-row label { font-size: 13px; color: var(--text-muted); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+@media (max-width: 480px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: repeat(3, 1fr); }
+}
